@@ -1,6 +1,6 @@
 {
-	"mongoURI": "mongodb+srv://craig123:<password>@devconnector-yf2kk.mongodb.net/test?retryWrites=true&w=majority",
-	"jwtSecret": "myJWTSecret",
-	"githubClientId": "401e3f5550c1b6ceeb3e",
-	"githubSecret": "19e5440c4cd300c7d0133ca492034ce27f73f33a"
+  "mongoURI": "mongodb+srv://craig123:craig123@devconnector-yf2kk.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "myJWTSecret",
+  "githubClientId": "401e3f5550c1b6ceeb3e",
+  "githubSecret": "19e5440c4cd300c7d0133ca492034ce27f73f33a"
 }
