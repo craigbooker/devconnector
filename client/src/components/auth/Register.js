@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-// import axios from 'axios';
-
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticed }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +14,7 @@ const Register = ({ setAlert }) => {
   });
 
   const { name, email, password, password2 } = formData;
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -23,30 +23,13 @@ const Register = ({ setAlert }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('SUCCESS!');
-      /* const newUser = {
-        name,
-        email,
-        password,
-        password2
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        };
-
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('/api/users', body, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      } */
+      register({ name, email, password });
     }
   };
+
+  if (isAuthenticed) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -109,10 +92,13 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticed: PropTypes.bool
 };
 
-export default connect(
-  null,
-  { setAlert }
-)(Register);
+const mapStateToProps = state => ({
+  isAuthenticed: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
